@@ -1,0 +1,43 @@
+type ExampleEntity @entity {
+  id: ID!
+  count: BigInt
+  owner: Bytes # address
+  approved: Bytes # address
+}
+
+type Profile @entity {
+  id: ID!
+  profileId: Bytes
+  banner: String
+  dp: String
+  name: String
+  bio: String
+}
+
+type MarketItem @entity {
+  id: ID!
+  tokenId: BigInt
+  seller: Bytes
+  owner: Bytes
+  price: BigInt
+  sold: Boolean
+  collectionId: BigInt
+  name: String
+  image: String
+  category: String
+  description: String
+  tags: Bytes
+}
+
+type Collection @entity {
+  id: ID!
+  collectionId: BigInt
+  banner: String
+  dp: String
+  owner: Bytes
+  name: String
+  totalSupply: BigInt
+  noHolders: BigInt
+  description: String
+  tags: Bytes
+}

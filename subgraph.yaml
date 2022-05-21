@@ -1,0 +1,42 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: UnrealMarketContract
+    network: mumbai
+    source:
+      address: "0xE9352F25795c89493e171D5d32A2350A2b3Bd8Fc"
+      abi: UnrealMarketContract
+      startBlock: 26398078
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - CollectionCreated
+        - MarketItemCreated
+        - ProfileCreated
+        - ProfileEdited
+        - Transfer
+      abis:
+        - name: UnrealMarketContract
+          file: ./abis/UnrealMarketContract.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: CollectionCreated(indexed uint256,string,string,address,string,uint256,uint256,string,string[])
+          handler: handleCollectionCreated
+        - event: MarketItemCreated(indexed uint256,address,address,uint256,bool,string,string,string,string,string,string[])
+          handler: handleMarketItemCreated
+        - event: ProfileCreated(address,string,string,string,string)
+          handler: handleProfileCreated
+        - event: ProfileEdited(address,string,string,string,string)
+          handler: handleProfileEdited
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
