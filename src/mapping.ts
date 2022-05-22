@@ -75,8 +75,9 @@ export function handleApproval(event: Approval): void {
 
 export function handleTransfer(event: Transfer): void {}
 export function handleCollectionCreated(event: CollectionCreated): void {
-  let id = event.transaction.from.toHex();
-  let collection = new Collection(id);
+  let collection = new Collection(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  );
   collection.collectionId = event.params.collectionId;
   collection.banner = event.params.banner;
   collection.dp = event.params.dp;
@@ -90,7 +91,9 @@ export function handleCollectionCreated(event: CollectionCreated): void {
 }
 
 export function handleMarketItemCreated(event: MarketItemCreated): void {
-  let marketItem = new MarketItem(event.transaction.from.toHex());
+  let marketItem = new MarketItem(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  );
   marketItem.tokenId = event.params.tokenId;
   marketItem.seller = event.params.seller;
   marketItem.owner = event.params.owner;
