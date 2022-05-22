@@ -9,7 +9,12 @@ import {
   ProfileEdited,
   Transfer,
 } from "../generated/UnrealMarketContract/UnrealMarketContract";
-import { ExampleEntity } from "../generated/schema";
+import {
+  ExampleEntity,
+  Collection,
+  Profile,
+  MarketItem,
+} from "../generated/schema";
 
 export function handleApproval(event: Approval): void {
   // Entities can be loaded from the store using a string ID; this ID
@@ -69,10 +74,59 @@ export function handleApproval(event: Approval): void {
 }
 
 export function handleTransfer(event: Transfer): void {}
-export function handleCollectionCreated(event: CollectionCreated): void {}
+export function handleCollectionCreated(event: CollectionCreated): void {
+  let id = event.transaction.from.toHex();
+  let collection = new Collection(id);
+  collection.collectionId = event.params.collectionId;
+  collection.banner = event.params.banner;
+  collection.dp = event.params.dp;
+  collection.owner = event.params.owner;
+  collection.name = event.params.name;
+  collection.totalSupply = event.params.totalSupply;
+  collection.noHolders = event.params.noHolders;
+  collection.description = event.params.description;
+  collection.tags = event.params.tags;
+  collection.save();
+}
 
-export function handleMarketItemCreated(event: MarketItemCreated): void {}
+export function handleMarketItemCreated(event: MarketItemCreated): void {
+  let marketItem = new MarketItem(event.transaction.from.toHex());
+  marketItem.tokenId = event.params.tokenId;
+  marketItem.seller = event.params.seller;
+  marketItem.owner = event.params.owner;
+  marketItem.price = event.params.price;
+  marketItem.sold = event.params.sold;
+  marketItem.collection = event.params.collection;
+  marketItem.name = event.params.name;
+  marketItem.image = event.params.image;
+  marketItem.category = event.params.category;
+  marketItem.description = event.params.description;
+  marketItem.tags = event.params.tags;
+  marketItem.save();
+}
 
-export function handleProfileCreated(event: ProfileCreated): void {}
+export function handleProfileCreated(event: ProfileCreated): void {
+  let profile = Profile.load(event.params.profileId.toHex());
+  if (profile == null) {
+    profile = new Profile(event.params.profileId.toHex());
+  }
+  profile.profileId = event.params.profileId;
+  profile.banner = event.params.banner;
+  profile.dp = event.params.dp;
+  profile.name = event.params.name;
+  profile.bio = event.params.bio;
+  profile.save();
+}
 
-export function handleProfileEdited(event: ProfileEdited): void {}
+export function handleProfileEdited(event: ProfileEdited): void {
+  let profile = Profile.load(event.params.profileId.toHex());
+  if (profile == null) {
+    profile = new Profile(event.params.profileId.toHex());
+  }
+  profile.profileId = event.params.profileId;
+  profile.banner = event.params.banner;
+  profile.dp = event.params.dp;
+  profile.name = event.params.name;
+  profile.bio = event.params.bio;
+  profile.save();
+}

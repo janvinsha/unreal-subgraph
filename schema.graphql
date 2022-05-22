@@ -1,43 +1,61 @@
+type _Schema_
+  @fulltext(
+    name: "itemSearch"
+    language: en
+    algorithm: rank
+    include: [
+      {
+        entity: "MarketItem"
+        fields: [
+          { name: "name" }
+          { name: "description" }
+          { name: "tags" }
+          { name: "category" }
+        ]
+      }
+    ]
+  )
+
 type ExampleEntity @entity {
   id: ID!
-  count: BigInt
-  owner: Bytes # address
-  approved: Bytes # address
+  count: BigInt!
+  owner: Bytes! # address
+  approved: Bytes! # address
 }
 
 type Profile @entity {
   id: ID!
-  profileId: Bytes
-  banner: String
-  dp: String
-  name: String
-  bio: String
+  profileId: Bytes!
+  banner: String!
+  dp: String!
+  name: String!
+  bio: String!
 }
 
 type MarketItem @entity {
   id: ID!
-  tokenId: BigInt
-  seller: Bytes
-  owner: Bytes
-  price: BigInt
-  sold: Boolean
-  collectionId: BigInt
-  name: String
-  image: String
-  category: String
-  description: String
-  tags: Bytes
+  tokenId: BigInt!
+  seller: Bytes!
+  owner: Bytes!
+  price: BigInt!
+  sold: Boolean!
+  collection: String!
+  name: String!
+  image: String!
+  category: String!
+  description: String!
+  tags: [String!]
 }
 
 type Collection @entity {
   id: ID!
-  collectionId: BigInt
-  banner: String
-  dp: String
-  owner: Bytes
-  name: String
-  totalSupply: BigInt
-  noHolders: BigInt
-  description: String
-  tags: Bytes
+  collectionId: BigInt!
+  banner: String!
+  dp: String!
+  owner: Bytes!
+  name: String!
+  totalSupply: BigInt!
+  noHolders: BigInt!
+  description: String!
+  tags: [String!]
 }
